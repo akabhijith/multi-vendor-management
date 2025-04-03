@@ -1,4 +1,5 @@
 const Product = require("../models/Product");
+const redisClient = require("../config/redis");
 
 // Create Product (Vendor Only)
 exports.createProduct = async (req, res) => {
@@ -20,7 +21,12 @@ exports.createProduct = async (req, res) => {
 // Get All Products
 exports.getProducts = async (req, res) => {
   try {
+    const cachedProducts = await redisClient.get("products");
+    if (cachedProducts) {
+      return res.json(JSON.parse(cachedProducts));
+    }
     const products = await Product.find();
+    await redisClient.set("products", JSON.stringify(products), "EX", 3600);
     res.json(products);
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
