@@ -18,5 +18,5 @@ A Node.js + Express application for managing multi-vendor products, orders, and 
 
 ## 🔧 Setup
 1. Clone the repository:
-   git clone https://github.com/yourusername/multi-vendor-order-management.git
+   git clone https://github.com/akabhijith/multi-vendor-management.git
    cd multi-vendor-order-management
